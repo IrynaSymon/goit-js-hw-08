@@ -7,9 +7,9 @@ input:document.querySelector(".feedback-form input"),
 }
 refs.form.addEventListener("submit", onFormSubmit);
 refs.form.addEventListener("input", throttle(onTexareaInput, 500));
-
-populateTextarea();
 let objectDataForm = {};
+populateTextarea();
+
 function dataFormLocalStorage() {
 return JSON.parse(localStorage.getItem(KEY_STORAGE)) ?? {};
 }
@@ -21,7 +21,7 @@ function onTexareaInput(evt){
     localStorage.setItem(KEY_STORAGE,JSON.stringify(objectDataForm));
 }
 function populateTextarea() {
-    const savedFormMessage = dataFormLocalStorage;
+    const savedFormMessage = dataFormLocalStorage();
     if (savedFormMessage.email) {
        refs.input.value = savedFormMessage.email;   
     }
@@ -30,12 +30,14 @@ function populateTextarea() {
     }
 }
 function onFormSubmit(evt) {
-    evt.preventDefault;
+    evt.preventDefault();
+
     if (!refs.input.value || !refs.textarea.value) {
-       return   alert("Please fill in all the fields");
+       return alert("Please fill in all the fields");
       
     }
-    console.log(objectDataForm);
+   
     localStorage.removeItem(KEY_STORAGE);
-    evt.currentTarger.reset();
+    evt.currentTarget.reset();
+    console.log(objectDataForm);
 }
